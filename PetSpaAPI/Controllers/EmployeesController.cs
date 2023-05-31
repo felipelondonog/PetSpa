@@ -18,7 +18,7 @@ namespace PetSpaAPI.Controllers
         }
 
         [HttpGet, ActionName("Get")]
-        [Route("GetEmployeeById/{employeeId}")]
+        [Route("GetEmployeeByCc/{employeeCc}")]
         public async Task<ActionResult<Employee>> GetEmployeeByCc(int cc)
         {
             var employee = await _context.Employees.FirstOrDefaultAsync(e => e.Cc == cc);
@@ -52,7 +52,7 @@ namespace PetSpaAPI.Controllers
         }
 
         [HttpPut, ActionName("Edit")]
-        [Route("EditEmployee/{employeeId}")]
+        [Route("EditEmployee/{employeeCc}")]
         public async Task<ActionResult> EditEmployee(int employeeCc, Employee employee)
         {
             try
@@ -76,7 +76,7 @@ namespace PetSpaAPI.Controllers
         }
 
         [HttpDelete, ActionName("Delete")]
-        [Route("DeleteEmployee/{employeeId}")]
+        [Route("DeleteEmployee/{employeeCc}")]
         public async Task<ActionResult> DeleteEmployee(int employeeCc)
         {
             if (_context.Employees == null) return Problem("Entity set 'DataBaseContext.Employees' is null.");
