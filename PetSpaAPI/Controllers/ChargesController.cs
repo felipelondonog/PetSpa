@@ -47,9 +47,6 @@ namespace PetSpaAPI.Controllers
         {
             try
             {
-                charge.Id = _context.Charges.Single().Id;
-                charge.Description = _context.Charges.Single().Description;
-
                 _context.Charges.Add(charge);
                 await _context.SaveChangesAsync();
 
