@@ -95,7 +95,7 @@ namespace PetSpaAPI.Controllers
 
         public async Task<ActionResult> DeleteSpeciess(int id)
         {
-            if (_context.Species == null) return Problem("Entity set 'DataBaseContex.Charges' is null");
+            if (_context.Species == null) return Problem("Entity set 'DataBaseContex.Species' is null");
             var species = await _context.Species.FirstOrDefaultAsync(c => c.Id == id);
 
             if (species == null) return NotFound("Species not found");
