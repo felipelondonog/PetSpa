@@ -20,8 +20,7 @@ namespace PetSpaAPI.Controllers
 
         [HttpGet, ActionName("Get")]
         [Route("Get")]
-
-        public async Task<ActionResult<IEnumerable<Species>>> GetSpeciess()
+        public async Task<ActionResult<IEnumerable<Species>>> GetSpecies()
         {
             var species = await _context.Species.ToListAsync();
             if (species == null) return NotFound();
@@ -31,8 +30,7 @@ namespace PetSpaAPI.Controllers
 
         [HttpGet, ActionName("Get")]
         [Route("Get/{id}")]
-
-        public async Task<ActionResult<Species>> GetSpeciessById(int id)
+        public async Task<ActionResult<Species>> GetSpeciesById(int id)
         {
             var species = await _context.Species.FirstOrDefaultAsync(c => c.Id == id);
             if (species == null) return NotFound();
@@ -42,8 +40,7 @@ namespace PetSpaAPI.Controllers
 
         [HttpPost, ActionName("Create")]
         [Route("Create")]
-
-        public async Task<ActionResult> CreateSpeciess(Species species)
+        public async Task<ActionResult> CreateSpecies(Species species)
         {
             try
             {
@@ -65,9 +62,8 @@ namespace PetSpaAPI.Controllers
         }
 
         [HttpPut, ActionName("Edit")]
-        [Route("Edit")]
-
-        public async Task<ActionResult> EditSpeciess(int id, Species species)
+        [Route("Edit/{id}")]
+        public async Task<ActionResult> EditSpecies(int id, Species species)
         {
             try
             {
@@ -92,8 +88,7 @@ namespace PetSpaAPI.Controllers
 
         [HttpDelete, ActionName("Delete")]
         [Route("Delete/{id}")]
-
-        public async Task<ActionResult> DeleteSpeciess(int id)
+        public async Task<ActionResult> DeleteSpecies(int id)
         {
             if (_context.Species == null) return Problem("Entity set 'DataBaseContex.Species' is null");
             var species = await _context.Species.FirstOrDefaultAsync(c => c.Id == id);
@@ -104,12 +99,6 @@ namespace PetSpaAPI.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(String.Format("La especie {0} fue eliminada", species.Name));
-
         }
-
-
-
-
-
     }
 }

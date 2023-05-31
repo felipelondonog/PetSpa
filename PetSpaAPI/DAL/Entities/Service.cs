@@ -17,6 +17,6 @@ namespace PetSpaAPI.DAL.Entities
         public int? Duration { get; set; }
 
         [Display(Name = "Costo")]
-        public SqlMoney? Cost { get; set; }
+        public double? Cost { get; set; }
     }
 }
