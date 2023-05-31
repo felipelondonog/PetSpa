@@ -107,8 +107,6 @@ namespace PetSpaAPI.Controllers
 
             return Ok(String.Format("El cargo {0} fue eliminado", charge.Name));
 
-
-
         }
 
     }
