@@ -20,7 +20,6 @@ namespace PetSpaAPI.Controllers
 
         [HttpGet, ActionName("Get")]
         [Route("Get")]
-
         public async Task<ActionResult<IEnumerable<Service>>> GetServices()
         {
             var services = await _context.Services.ToListAsync();
@@ -29,13 +28,21 @@ namespace PetSpaAPI.Controllers
             return services;
         }
 
+        [HttpGet, ActionName("Get")]
+        [Route("Get/{id}")]
+        public async Task<ActionResult<Service>> GetServiceById(int id)
+        {
+            var services = await _context.Services.FirstOrDefaultAsync(s => s.Id == id);
+            if (services == null) return NotFound();
+
+            return Ok(services);
+        }
 
         [HttpGet, ActionName("Get")]
         [Route("Get/{name}")]
-
         public async Task<ActionResult<Service>> GetServiceByName(string name)
         {
-            var services = await _context.Services.FirstOrDefaultAsync(c => c.Name == name);
+            var services = await _context.Services.FirstOrDefaultAsync(s => s.Name == name);
             if (services == null) return NotFound();
 
             return Ok(services);
@@ -43,7 +50,6 @@ namespace PetSpaAPI.Controllers
 
         [HttpPost, ActionName("Create")]
         [Route("Create")]
-
         public async Task<ActionResult> CreateService(Service service)
         {
             try
@@ -55,18 +61,17 @@ namespace PetSpaAPI.Controllers
             catch (DbUpdateException dbUpdateException)
             {
                 if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-                    return Conflict(String.Format("{0} ya existe", service.Name));
+                    return Conflict(String.Format("{0} ya existe ", service.Name));
             }
             catch (Exception ex)
             {
                 return Conflict(ex.Message);
             }
             return Ok(service);
-
         }
 
         [HttpPut, ActionName("Edit")]
-        [Route("Edit")]
+        [Route("Edit/{id}")]
 
         public async Task<ActionResult> EditService(int id, Service service)
         {

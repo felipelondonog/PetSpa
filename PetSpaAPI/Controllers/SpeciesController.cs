@@ -8,12 +8,12 @@ namespace PetSpaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SpeciessController : ControllerBase
+    public class SpeciesController : ControllerBase
     {
 
         private readonly DataBaseContext _context;
 
-        public SpeciessController(DataBaseContext context)
+        public SpeciesController(DataBaseContext context)
         {
             _context = context;
         }

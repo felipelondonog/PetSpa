@@ -65,7 +65,7 @@ namespace PetSpaAPI.Controllers
         }
 
         [HttpPut, ActionName("Edit")]
-        [Route("Edit")]
+        [Route("Edit/{id}")]
 
         public async Task<ActionResult> EditCharge(int id, Charge charge)
         {

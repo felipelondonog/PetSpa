@@ -19,7 +19,6 @@ namespace PetSpaAPI.Controllers
 
         [HttpGet, ActionName("Get")]
         [Route("Get")]
-
         public async Task<ActionResult<IEnumerable<Breed>>> GetBreeds()
         {
             var breeds = await _context.Breeds.ToListAsync();
@@ -29,18 +28,28 @@ namespace PetSpaAPI.Controllers
         }
 
         [HttpGet, ActionName("Get")]
-        [Route("Get/{id}")]
+        [Route("GetBreedsBySpeciesId/{speciesId}")]
+        public async Task<ActionResult<IEnumerable<Breed>>> GetBreedsBySpeciesId(int speciesId)
+        {
+            var breeds = await _context.Breeds
+                .Where(b => b.SpeciesId == speciesId)
+                .ToListAsync();
+            if(breeds == null) return NotFound();
+            return breeds;
+        }
 
+        [HttpGet, ActionName("Get")]
+        [Route("Get/{id}")]
         public async Task<ActionResult<Breed>> GetBreedById(int id)
         {
-            var breeds = await _context.Breeds.FirstOrDefaultAsync(c => c.Id == id);
-            if (breeds == null) return NotFound();
+            var breed = await _context.Breeds.FirstOrDefaultAsync(b => b.Id == id);
+            if (breed == null) return NotFound();
 
-            return Ok(breeds);
+            return Ok(breed);
         }
+
         [HttpPost, ActionName("Create")]
         [Route("CreateBreed")]
-
         public async Task<ActionResult> CreateBreed(Breed breed, int speciesId)
         {
             try
@@ -67,7 +76,6 @@ namespace PetSpaAPI.Controllers
 
         [HttpPut, ActionName("Edit")]
         [Route("EditBreed/{breedId")]
-
         public async Task<ActionResult> EditBreed(int id, Breed breed)
         {
             try
@@ -93,19 +101,18 @@ namespace PetSpaAPI.Controllers
         }
 
         [HttpDelete, ActionName("Delete")]
-        [Route("Delete/{id}")]
-
+        [Route("DeleteBreed/{breedId}")]
         public async Task<ActionResult> DeleteBreed(int id)
         {
             if (_context.Breeds == null) return Problem("Entity set 'DataBaseContex.Breed' is null");
-            var breed = await _context.Breeds.FirstOrDefaultAsync(c => c.Id == id);
+            var breed = await _context.Breeds.FirstOrDefaultAsync(b => b.Id == id);
 
             if (breed == null) return NotFound("Breed not found");
 
             _context.Breeds.Remove(breed);
             await _context.SaveChangesAsync();
 
-            return Ok(String.Format("La raza {0} fue eliminada", breed.Name));
+            return Ok(String.Format("La raza {0} fue eliminada.", breed.Name));
 
         }
 
